@@ -525,6 +525,10 @@ class DetectMultiBackend(nn.Module):
                 im1 = im.numpy()
                 im1 = im1.astype(keras_tf.backend.set_floatx('float16'))
                 im = torch.from_numpy(im1)
+            elif self.float_type=='float32':
+                im1 = im.numpy()
+                im1 = im1.astype(keras_tf.backend.set_floatx('float32'))
+                im = torch.from_numpy(im1)
             #END NEW
                 
             im = im.permute(0, 2, 3, 1).cpu().numpy()  # torch BCHW to numpy BHWC shape(1,320,192,3)
