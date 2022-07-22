@@ -397,13 +397,13 @@ class DetectMultiBackend(nn.Module):
             model = ct.models.MLModel(w)
         else:  # TensorFlow (SavedModel, GraphDef, Lite, Edge TPU)
             if saved_model:  # SavedModel
-                print("qui2 --------------------")
+                print("qui1 --------------------")
                 LOGGER.info(f'Loading {w} for TensorFlow SavedModel inference...')
                 import tensorflow as tf
                 keras = True #False  # assume TF1 saved_model #NEW
-                print("qui1 --------------")
-                #model = tf.keras.models.load_model(w) if keras else tf.saved_model.load(w)
-                model = keras_tf.models.load_model(w) if keras else keras_tf.saved_model.load(w)
+                print("qui2 --------------")
+                model = tf.keras.models.load_model(w) if keras else tf.saved_model.load(w)
+                #model = keras_tf.models.load_model(w) if keras else keras_tf.saved_model.load(w)
                 print("qui3 --------------------")
                 # NEW
                 print(model.summary(), '\n')
@@ -530,6 +530,7 @@ class DetectMultiBackend(nn.Module):
             im = im.permute(0, 2, 3, 1).cpu().numpy()  # torch BCHW to numpy BHWC shape(1,320,192,3)
             if self.saved_model:  # SavedModel
                 y = (self.model(im, training=False) if self.keras else self.model(im)).numpy()
+                print("type y", type(y))
             elif self.pb:  # GraphDef
                 y = self.frozen_func(x=self.tf.constant(im)).numpy()
             else:  # Lite or Edge TPU
@@ -547,6 +548,7 @@ class DetectMultiBackend(nn.Module):
             y[..., :4] *= [w, h, w, h]  # xywh normalized to pixels
 
         if isinstance(y, np.ndarray):
+            y = y.astype('float') # NEW
             y = torch.tensor(y, device=self.device)
         return (y, []) if val else y
 
