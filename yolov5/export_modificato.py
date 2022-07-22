@@ -52,6 +52,7 @@ import time
 import warnings
 from pathlib import Path
 
+from tensorflow.python import keras as keras_tf
 import pandas as pd
 import torch
 import yaml
@@ -318,7 +319,7 @@ def export_saved_model(model,
         tf_model = TFModel(cfg=model.yaml, model=model, nc=model.nc, imgsz=imgsz, cust_type=custom_type) # NEW paramtere cust_time
         im = tf.zeros((batch_size, *imgsz, ch))  # BHWC order for TensorFlow
         _ = tf_model.predict(im, tf_nms, agnostic_nms, topk_per_class, topk_all, iou_thres, conf_thres)
-        inputs = tf.keras.Input(shape=(*imgsz, ch), batch_size=None if dynamic else batch_size)
+        inputs = tf.keras.Input(shape=(*imgsz, ch), batch_size=None if dynamic else batch_size, dtype=custom_type) # NEW custom_type
         outputs = tf_model.predict(inputs, tf_nms, agnostic_nms, topk_per_class, topk_all, iou_thres, conf_thres)
         keras_model = tf.keras.Model(inputs=inputs, outputs=outputs)
         keras_model.trainable = True #False NEW
