@@ -27,6 +27,7 @@ from pathlib import Path
 import numpy as np
 import torch
 from tqdm import tqdm
+import tensorflow as tf # NEW 
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -205,6 +206,8 @@ def run(
         dt[0] += t2 - t1
 
         # Inference
+        im = im.numpy() # NEW conver to array
+        im = tf.convert_to_tensor(im, dtype=tf.posit160) # NEW convert to tensor of tensorflow
         out, train_out = model(im) if training else model(im, augment=augment, val=True)  # inference, loss outputs
         dt[1] += time_sync() - t2
 
@@ -257,6 +260,8 @@ def run(
 
         # Plot images
         if plots and batch_i < 3:
+            im = im.numpy().astype('float32') # NEW
+            im = torch.tensor(im) # NEW
             plot_images(im, targets, paths, save_dir / f'val_batch{batch_i}_labels.jpg', names)  # labels
             plot_images(im, output_to_target(out), paths, save_dir / f'val_batch{batch_i}_pred.jpg', names)  # pred
 
