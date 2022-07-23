@@ -1,4 +1,4 @@
-# project_seai
+# Name of the project: Comparison between posit and float representation in a computer vision task using YOLOv5
 
 Repository for the project of the course of Symbolic and Evolutionary Artificial Intelligence. 
 
