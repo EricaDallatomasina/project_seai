@@ -414,7 +414,7 @@ class DetectMultiBackend(nn.Module):
                 # END NEW
                 
                 
-                
+                """
                 # NEW
                 #Define precision
                 if float_type == 'posit160':
@@ -436,7 +436,7 @@ class DetectMultiBackend(nn.Module):
                 #Set Weights Model
                 print("Converting weights to ", str(keras_tf.backend.floatx()))
                 wsp = [w.astype(keras_tf.backend.floatx()) for w in model.get_weights()]
-                model.set_weights(wsp)
+                model.set_weights(wsp)"""
                 
                 #END NEW
             elif pb:  # GraphDef https://www.tensorflow.org/guide/migrate#a_graphpb_or_graphpbtxt
