@@ -206,8 +206,8 @@ def run(
         dt[0] += t2 - t1
 
         # Inference
-        im = im.numpy() # NEW conver to array
-        im = tf.convert_to_tensor(im, dtype=tf.posit160) # NEW convert to tensor of tensorflow
+        im = im.numpy() # NEW convert pytorch tensor to array
+        im = tf.convert_to_tensor(im) # NEW convert to tensor of tensorflow #dtype=tf.posit160
         out, train_out = model(im) if training else model(im, augment=augment, val=True)  # inference, loss outputs
         dt[1] += time_sync() - t2
 
