@@ -1,5 +1,5 @@
 # Project: Comparison between posit and float representation in a computer vision task using YOLOv5
-## Authors: Erica Dallatomasina, Matteo Castrignano
+### Authors: Erica Dallatomasina, Matteo Castrignano
 
 Repository for the project of the course of Symbolic and Evolutionary Artificial Intelligence. 
 
